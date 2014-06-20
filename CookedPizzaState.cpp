@@ -4,17 +4,17 @@
 
 using namespace std;
 
-CookedPizzaState::CookedPizzaState(Pizza* pizza) : PizzaState(pizza)
+CookedPizzaState::CookedPizzaState()
 {
 }
 
-void CookedPizzaState::bake()
+void CookedPizzaState::bake(Pizza* pizza)
 {
     cout << "Baking the pizza..." << endl;
     pizza->setState(pizza->getBakedState());
 }
 
-void CookedPizzaState::deliver()
+void CookedPizzaState::deliver(Pizza* pizza)
 {
     cout << "Can't deliver a pizza not baked yet" << endl;
 }

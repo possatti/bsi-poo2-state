@@ -6,12 +6,10 @@ class Pizza;
 class PizzaState
 {
 public:
-    PizzaState(Pizza* pizza);
-    virtual void bake() = 0;
-    virtual void deliver() = 0;
+    PizzaState();
+    virtual void bake(Pizza* pizza) = 0;
+    virtual void deliver(Pizza* pizza) = 0;
     virtual ~PizzaState();
-protected:
-    Pizza* pizza;
 };
 
 #endif	/* PIZZASTATE_H */

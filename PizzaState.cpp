@@ -1,8 +1,7 @@
 #include "PizzaState.h"
 
-PizzaState::PizzaState(Pizza* pizza)
+PizzaState::PizzaState()
 {
-    this->pizza = pizza;
 }
 
 PizzaState::~PizzaState()

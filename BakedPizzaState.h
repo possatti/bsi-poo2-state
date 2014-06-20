@@ -8,9 +8,9 @@ class Pizza;
 class BakedPizzaState : public PizzaState
 {
 public:
-    BakedPizzaState(Pizza* pizza);
-    virtual void bake();
-    virtual void deliver();
+    BakedPizzaState();
+    virtual void bake(Pizza* pizza);
+    virtual void deliver(Pizza* pizza);
     virtual ~BakedPizzaState();
 };
 

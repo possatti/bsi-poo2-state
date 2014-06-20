@@ -3,22 +3,22 @@
 #include "BakedPizzaState.h"
 #include "DeliveredState.h"
 
-Pizza::Pizza()
+Pizza::Pizza() :
+cookedState(new CookedPizzaState()),
+bakedState(new BakedPizzaState()),
+deliveredState(new DeliveredState())
 {
-    this->cookedState = new CookedPizzaState(this);
-    this->bakedState = new BakedPizzaState(this);
-    this->deliveredState = new DeliveredState(this);
     this->state = cookedState;
 }
 
 void Pizza::bake()
 {
-    this->state->bake();
+    this->state->bake(this);
 }
 
 void Pizza::deliver()
 {
-    this->state->deliver();
+    this->state->deliver(this);
 }
 
 PizzaState* Pizza::getBakedState()
