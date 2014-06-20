@@ -21,22 +21,22 @@ void Pizza::deliver()
     this->state->deliver(this);
 }
 
-PizzaState* Pizza::getBakedState()
+const PizzaState* Pizza::getBakedState()
 {
     return this->bakedState;
 }
 
-PizzaState* Pizza::getDeliveredState()
+const PizzaState* Pizza::getDeliveredState()
 {
     return this->deliveredState;
 }
 
-PizzaState* Pizza::getCookedState()
+const PizzaState* Pizza::getCookedState()
 {
     return this->cookedState;
 }
 
-void Pizza::setState(PizzaState* state)
+void Pizza::setState(const PizzaState* state)
 {
     this->state = state;
 }

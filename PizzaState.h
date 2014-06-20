@@ -7,8 +7,8 @@ class PizzaState
 {
 public:
     PizzaState();
-    virtual void bake(Pizza* pizza) = 0;
-    virtual void deliver(Pizza* pizza) = 0;
+    virtual void bake(Pizza* pizza) const = 0;
+    virtual void deliver(Pizza* pizza) const = 0;
     virtual ~PizzaState();
 };
 

@@ -9,8 +9,8 @@ class BakedPizzaState : public PizzaState
 {
 public:
     BakedPizzaState();
-    virtual void bake(Pizza* pizza);
-    virtual void deliver(Pizza* pizza);
+    virtual void bake(Pizza* pizza) const;
+    virtual void deliver(Pizza* pizza) const;
     virtual ~BakedPizzaState();
 };
 

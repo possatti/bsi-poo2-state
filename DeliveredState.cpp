@@ -7,12 +7,12 @@ DeliveredState::DeliveredState()
 {
 }
 
-void DeliveredState::bake(Pizza* pizza)
+void DeliveredState::bake(Pizza* pizza) const
 {
     cout << "Can't bake pizza already delivered" << endl;
 }
 
-void DeliveredState::deliver(Pizza* pizza)
+void DeliveredState::deliver(Pizza* pizza) const
 {
     cout << "Can't deliver pizza already delivered" << endl;
 }

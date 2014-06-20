@@ -8,13 +8,13 @@ CookedPizzaState::CookedPizzaState()
 {
 }
 
-void CookedPizzaState::bake(Pizza* pizza)
+void CookedPizzaState::bake(Pizza* pizza) const
 {
     cout << "Baking the pizza..." << endl;
     pizza->setState(pizza->getBakedState());
 }
 
-void CookedPizzaState::deliver(Pizza* pizza)
+void CookedPizzaState::deliver(Pizza* pizza) const
 {
     cout << "Can't deliver a pizza not baked yet" << endl;
 }

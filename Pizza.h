@@ -8,17 +8,20 @@ class PizzaState;
 
 class Pizza
 {
+private:
+    const PizzaState * const cookedState;
+    const PizzaState * const bakedState;
+    const PizzaState * const deliveredState;
+    const PizzaState *state;
 public:
     Pizza();
-    PizzaState* getCookedState();
-    PizzaState* getBakedState();
-    PizzaState* getDeliveredState();
+    const PizzaState* getCookedState();
+    const PizzaState* getBakedState();
+    const PizzaState* getDeliveredState();
     void bake();
     void deliver();
-    void setState(PizzaState* state);
+    void setState(const PizzaState* state);
     virtual ~Pizza();
-private:
-    PizzaState *cookedState, *bakedState, *deliveredState, *state;
 };
 
 #endif	/* PIZZA_H */

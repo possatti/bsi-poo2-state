@@ -9,11 +9,9 @@ class DeliveredState : public PizzaState
 {
 public:
     DeliveredState();
-    virtual void bake(Pizza* pizza);
-    virtual void deliver(Pizza* pizza);
+    virtual void bake(Pizza* pizza) const;
+    virtual void deliver(Pizza* pizza) const;
     virtual ~DeliveredState();
-private:
-
 };
 
 #endif	/* DELIVEREDSTATE_H */
