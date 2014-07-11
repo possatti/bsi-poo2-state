@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Exemplo do padrão State em C++ : Exemplo em C++ do uso do padrão de projeto State" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Exemplo do padrão State em C++</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/possatti/poo2-state">View on GitHub</a>
+
+          <h1 id="project_title">Exemplo do padrão State em C++</h1>
+          <h2 id="project_tagline">Exemplo em C++ do uso do padrão de projeto State</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/possatti/poo2-state/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/possatti/poo2-state/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="exemplo-do-padr%C3%A3o-state-em-c" class="anchor" href="#exemplo-do-padr%C3%A3o-state-em-c"><span class="octicon octicon-link"></span></a>Exemplo do padrão State em C++</h1>
+
+<h2>
+<a name="descri%C3%A7%C3%A3o-do-padr%C3%A3o" class="anchor" href="#descri%C3%A7%C3%A3o-do-padr%C3%A3o"><span class="octicon octicon-link"></span></a>Descrição do padrão</h2>
+
+<p>Permite a um objeto alterar o seu comporamento quando o estado interno muda.</p>
+
+<p>Para implementa-lo, encapsulamos o estado com o seu contexto. Conforme a estrutura de exemplo abaixo.</p>
+
+<p><img src="http://sourcemaking.com/files/v2/content/patterns/State1-2x.png" alt="Estrutura do padrão State"></p>
+
+<h2>
+<a name="explica%C3%A7%C3%A3o-do-exemplo" class="anchor" href="#explica%C3%A7%C3%A3o-do-exemplo"><span class="octicon octicon-link"></span></a>Explicação do exemplo</h2>
+
+<p>Nesse exemplo, tempos uma pizza, que pode estar em três diferentes estados: cooked (cozida), baked (assada), delivered (entregue). E quando chamamos os diferentes métodos da pizza, ela dá conta de mudar o seu estado atual.</p>
+
+<p>No código, temos a classe <code>PizzaState</code> que é a classe base para os diferentes estados que temos para pizza, cujas implementações são: <code>BakedPizzaState</code>, <code>CookedPizzaState</code> e <code>DeliveredState</code>.</p>
+
+<h2>
+<a name="alunos" class="anchor" href="#alunos"><span class="octicon octicon-link"></span></a>Alunos</h2>
+
+<ul>
+<li>Lucas Possatti (<a href="https://github.com/possatti" class="user-mention">@possatti</a>)</li>
+<li>Phillipe Alcantara (<a href="https://github.com/paflopes" class="user-mention">@paflopes</a>)</li>
+</ul>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Exemplo do padrão State em C++ maintained by <a href="https://github.com/possatti">possatti</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
