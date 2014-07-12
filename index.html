@@ -4,7 +4,7 @@
   <head>
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Exemplo do padrão State em C++ : Exemplo em C++ do uso do padrão de projeto State" />
+    <meta name="description" content="Exemplo do padrão State em C++ : " />
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
@@ -19,7 +19,7 @@
           <a id="forkme_banner" href="https://github.com/possatti/poo2-state">View on GitHub</a>
 
           <h1 id="project_title">Exemplo do padrão State em C++</h1>
-          <h2 id="project_tagline">Exemplo em C++ do uso do padrão de projeto State</h2>
+          <h2 id="project_tagline"></h2>
 
             <section id="downloads">
               <a class="zip_download_link" href="https://github.com/possatti/poo2-state/zipball/master">Download this project as a .zip file</a>
@@ -31,22 +31,180 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-
-<h2>
+        <h2>
 <a name="descri%C3%A7%C3%A3o-do-padr%C3%A3o" class="anchor" href="#descri%C3%A7%C3%A3o-do-padr%C3%A3o"><span class="octicon octicon-link"></span></a>Descrição do padrão</h2>
 
-<p>Permite a um objeto alterar o seu comporamento quando o estado interno muda.</p>
-
-<p>Para implementa-lo, encapsulamos o estado com o seu contexto. Conforme a estrutura de exemplo abaixo.</p>
+<p>O padrão permite a um objeto alterar o seu comportamento quando o estado interno muda. Para implementa-lo, uma das possibilidades é encapsularmos o estado em seu seu contexto. Conforme a estrutura do exemplo abaixo.</p>
 
 <p><img src="http://sourcemaking.com/files/v2/content/patterns/State1-2x.png" alt="Estrutura do padrão State"></p>
 
+<p>Na figura acima podemos ver que <code>State</code> define uma interface comum para os estados, possibilitando que todos eles sejam usados, sem distinção, pelos clientes. Com isso, ele define o método <code>goNext(..)</code>, que é implementado pelas subclasses para ativar o próximo estado.</p>
+
+<p>Porém no caso da implementação do nosso exemplo, faremos um pouco diferente do descrito acima. Pois iremos implementar o cliente e o contexto como uma única entidade, para simplificar a implementação.</p>
+
 <h2>
-<a name="explica%C3%A7%C3%A3o-do-exemplo" class="anchor" href="#explica%C3%A7%C3%A3o-do-exemplo"><span class="octicon octicon-link"></span></a>Explicação do exemplo</h2>
+<a name="implementa%C3%A7%C3%A3o-do-exemplo" class="anchor" href="#implementa%C3%A7%C3%A3o-do-exemplo"><span class="octicon octicon-link"></span></a>Implementação do exemplo</h2>
 
-<p>Nesse exemplo, tempos uma pizza, que pode estar em três diferentes estados: cooked (cozida), baked (assada), delivered (entregue). E quando chamamos os diferentes métodos da pizza, ela dá conta de mudar o seu estado atual.</p>
+<p>Nesse exemplo, tempos o caso de uma pizza, que pode estar em três diferentes estados: cooked (preparada), baked (assada), delivered (entregue). E dependendo das ações tomadas, a pizza muda o seu estado atual. Passando a responder de uma forma diferente.</p>
 
-<p>No código, temos a classe <code>PizzaState</code> que é a classe base para os diferentes estados que temos para pizza, cujas implementações são: <code>BakedPizzaState</code>, <code>CookedPizzaState</code> e <code>DeliveredState</code>.</p>
+<p>No código, temos a classe <code>PizzaState</code> que é a classe base para os diferentes estados que serão implementados.</p>
+
+<p><strong>PizzaState.h:</strong></p>
+
+<div class="highlight highlight-cpp"><pre><span class="k">class</span> <span class="nc">Pizza</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">PizzaState</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">PizzaState</span><span class="p">();</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">bake</span><span class="p">(</span><span class="n">Pizza</span><span class="o">*</span> <span class="n">pizza</span><span class="p">)</span> <span class="k">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">deliver</span><span class="p">(</span><span class="n">Pizza</span><span class="o">*</span> <span class="n">pizza</span><span class="p">)</span> <span class="k">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">virtual</span> <span class="o">~</span><span class="n">PizzaState</span><span class="p">();</span>
+<span class="p">};</span>
+</pre></div>
+
+<p><strong>PizzaState.cpp:</strong></p>
+
+<div class="highlight highlight-cpp"><pre><span class="n">PizzaState</span><span class="o">::</span><span class="n">PizzaState</span><span class="p">()</span> <span class="p">{</span> <span class="p">}</span>
+<span class="n">PizzaState</span><span class="o">::~</span><span class="n">PizzaState</span><span class="p">()</span> <span class="p">{</span> <span class="p">}</span>
+</pre></div>
+
+<p>Vemos em <code>PizzaState</code> que definimos os métodos <code>bake(..)</code> e <code>deliver(..)</code> que não são implementados nessa classe. Mas são implementados nas subclasses (os diferentes estados).</p>
+
+<p>Com isso definido, nós implementamos as subclasses <code>CookedPizzaState</code>, <code>BakedPizzaState</code> e <code>DeliveredState</code>. Como exemplo, iremos exibir aqui, apenas a classe <code>BakedPizzaState</code>.</p>
+
+<p><strong>BakedPizzaState.h:</strong></p>
+
+<div class="highlight highlight-cpp"><pre><span class="cp">#include "PizzaState.h"</span>
+
+<span class="k">class</span> <span class="nc">Pizza</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">BakedPizzaState</span> <span class="o">:</span> <span class="k">public</span> <span class="n">PizzaState</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">BakedPizzaState</span><span class="p">();</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">bake</span><span class="p">(</span><span class="n">Pizza</span><span class="o">*</span> <span class="n">pizza</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">deliver</span><span class="p">(</span><span class="n">Pizza</span><span class="o">*</span> <span class="n">pizza</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+    <span class="k">virtual</span> <span class="o">~</span><span class="n">BakedPizzaState</span><span class="p">();</span>
+<span class="p">};</span>
+</pre></div>
+
+<p><strong>BakedPizzaState.cpp:</strong></p>
+
+<div class="highlight highlight-cpp"><pre><span class="cp">#include "BakedPizzaState.h"</span>
+<span class="cp">#include "Pizza.h"</span>
+<span class="cp">#include &lt;iostream&gt;</span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="n">BakedPizzaState</span><span class="o">::</span><span class="n">BakedPizzaState</span><span class="p">()</span> <span class="p">{</span> <span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">BakedPizzaState</span><span class="o">::</span><span class="n">bake</span><span class="p">(</span><span class="n">Pizza</span><span class="o">*</span> <span class="n">pizza</span><span class="p">)</span> <span class="k">const</span>
+<span class="p">{</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Can't bake a pizza already baked"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">BakedPizzaState</span><span class="o">::</span><span class="n">deliver</span><span class="p">(</span><span class="n">Pizza</span><span class="o">*</span> <span class="n">pizza</span><span class="p">)</span> <span class="k">const</span>
+<span class="p">{</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Delivering the pizza..."</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="n">pizza</span><span class="o">-&gt;</span><span class="n">setState</span><span class="p">(</span><span class="n">pizza</span><span class="o">-&gt;</span><span class="n">getDeliveredState</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="n">BakedPizzaState</span><span class="o">::~</span><span class="n">BakedPizzaState</span><span class="p">()</span> <span class="p">{</span> <span class="p">}</span>
+</pre></div>
+
+<p>Podemos ver que em <code>BakedPizzaState</code>, nós implementamos os métodos <code>bake(..)</code> e <code>deliver(..)</code> da classe <code>PizzaState</code> para desempenhar o comportamento específico de um pizza quando ela está no estado <code>BakedPizzaState</code>.</p>
+
+<p>Agora precisamos ver como a pizza usa esses estados. Basicamente o que a classe <code>Pizza</code> faz é delegar a chamada de seus métodos para os métodos do estado, ao invés de responder por si mesma. Como por exemplo, ao chamar o método <code>pizza-&gt;deliver(..)</code>, esse método da pizza, irá encaminhar a respota do seu estado atual: <code>currentState-&gt;deliver(..)</code>.</p>
+
+<p>Agora vejamos a implementação da pizza.</p>
+
+<p><strong>Pizza.h:</strong></p>
+
+<div class="highlight highlight-cpp"><pre><span class="cp">#include "PizzaState.h"</span>
+
+<span class="k">class</span> <span class="nc">PizzaState</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Pizza</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="k">const</span> <span class="n">PizzaState</span> <span class="o">*</span> <span class="k">const</span> <span class="n">cookedState</span><span class="p">;</span>
+    <span class="k">const</span> <span class="n">PizzaState</span> <span class="o">*</span> <span class="k">const</span> <span class="n">bakedState</span><span class="p">;</span>
+    <span class="k">const</span> <span class="n">PizzaState</span> <span class="o">*</span> <span class="k">const</span> <span class="n">deliveredState</span><span class="p">;</span>
+    <span class="k">const</span> <span class="n">PizzaState</span> <span class="o">*</span><span class="n">state</span><span class="p">;</span> <span class="c1">// Estado atual.</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">Pizza</span><span class="p">();</span>
+    <span class="k">const</span> <span class="n">PizzaState</span><span class="o">*</span> <span class="nf">getCookedState</span><span class="p">();</span>
+    <span class="k">const</span> <span class="n">PizzaState</span><span class="o">*</span> <span class="nf">getBakedState</span><span class="p">();</span>
+    <span class="k">const</span> <span class="n">PizzaState</span><span class="o">*</span> <span class="nf">getDeliveredState</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">bake</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">deliver</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">setState</span><span class="p">(</span><span class="k">const</span> <span class="n">PizzaState</span><span class="o">*</span> <span class="n">state</span><span class="p">);</span>
+    <span class="k">virtual</span> <span class="o">~</span><span class="n">Pizza</span><span class="p">();</span>
+<span class="p">};</span>
+</pre></div>
+
+<p><strong>Pizza.cpp:</strong></p>
+
+<div class="highlight highlight-cpp"><pre><span class="cp">#include "Pizza.h"</span>
+<span class="cp">#include "CookedPizzaState.h"</span>
+<span class="cp">#include "BakedPizzaState.h"</span>
+<span class="cp">#include "DeliveredState.h"</span>
+
+<span class="n">Pizza</span><span class="o">::</span><span class="n">Pizza</span><span class="p">()</span> <span class="o">:</span>
+<span class="n">cookedState</span><span class="p">(</span><span class="k">new</span> <span class="n">CookedPizzaState</span><span class="p">()),</span>
+<span class="n">bakedState</span><span class="p">(</span><span class="k">new</span> <span class="n">BakedPizzaState</span><span class="p">()),</span>
+<span class="n">deliveredState</span><span class="p">(</span><span class="k">new</span> <span class="n">DeliveredState</span><span class="p">())</span>
+<span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">state</span> <span class="o">=</span> <span class="n">cookedState</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Pizza</span><span class="o">::</span><span class="n">bake</span><span class="p">()</span>
+<span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">state</span><span class="o">-&gt;</span><span class="n">bake</span><span class="p">(</span><span class="k">this</span><span class="p">);</span> <span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Pizza</span><span class="o">::</span><span class="n">deliver</span><span class="p">()</span>
+<span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">state</span><span class="o">-&gt;</span><span class="n">deliver</span><span class="p">(</span><span class="k">this</span><span class="p">);</span> <span class="p">}</span>
+
+<span class="k">const</span> <span class="n">PizzaState</span><span class="o">*</span> <span class="n">Pizza</span><span class="o">::</span><span class="n">getBakedState</span><span class="p">()</span>
+<span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">bakedState</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="k">const</span> <span class="n">PizzaState</span><span class="o">*</span> <span class="n">Pizza</span><span class="o">::</span><span class="n">getDeliveredState</span><span class="p">()</span>
+<span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">deliveredState</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="k">const</span> <span class="n">PizzaState</span><span class="o">*</span> <span class="n">Pizza</span><span class="o">::</span><span class="n">getCookedState</span><span class="p">()</span>
+<span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">cookedState</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Pizza</span><span class="o">::</span><span class="n">setState</span><span class="p">(</span><span class="k">const</span> <span class="n">PizzaState</span><span class="o">*</span> <span class="n">state</span><span class="p">)</span>
+<span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">state</span> <span class="o">=</span> <span class="n">state</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="n">Pizza</span><span class="o">::~</span><span class="n">Pizza</span><span class="p">()</span> <span class="p">{</span> <span class="p">}</span>
+</pre></div>
+
+<p>No código, vemos claramente que os métodos encaminham a responsabilidade para os métodos do estado atual, e eles devem dar conta de responder achamada e mudar de estado quando for necessário.</p>
+
+<p>Por fim, vejamos o <code>main</code> exemplificando o uso da classe pizza.</p>
+
+<p><strong>main.cpp:</strong></p>
+
+<div class="highlight highlight-cpp"><pre><span class="cp">#include &lt;cstdlib&gt;</span>
+
+<span class="cp">#include "Pizza.h"</span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Cria uma pizza.</span>
+    <span class="n">Pizza</span><span class="o">*</span> <span class="n">pizza</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Pizza</span><span class="p">;</span>
+
+    <span class="c1">// Faz várias chamadas dos métodos da pizza.</span>
+    <span class="n">pizza</span><span class="o">-&gt;</span><span class="n">deliver</span><span class="p">();</span>
+    <span class="n">pizza</span><span class="o">-&gt;</span><span class="n">bake</span><span class="p">();</span>
+    <span class="n">pizza</span><span class="o">-&gt;</span><span class="n">bake</span><span class="p">();</span>
+    <span class="n">pizza</span><span class="o">-&gt;</span><span class="n">deliver</span><span class="p">();</span>
+    <span class="n">pizza</span><span class="o">-&gt;</span><span class="n">deliver</span><span class="p">();</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
 
 <h2>
 <a name="alunos" class="anchor" href="#alunos"><span class="octicon octicon-link"></span></a>Alunos</h2>
